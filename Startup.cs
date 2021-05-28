@@ -30,6 +30,10 @@ namespace API2
         {
             services.AddControllers();
             services.AddScoped<PersonRepository>();
+            services.AddScoped<AcountRepository>();
+            services.AddScoped<ProfilingRepository>();
+            services.AddScoped<EducationRepository>();
+            services.AddScoped<UniversityRepository>();
             services.AddDbContext<MyContext>((options => 
             options.UseSqlServer(Configuration.GetConnectionString("Api2Context"))));
         }
