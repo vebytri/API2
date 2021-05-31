@@ -27,9 +27,9 @@ namespace API2.Context
             modelBuilder.Entity<Acount>()
                 .HasOne<Profiling>(p => p.Profilingg).WithOne(a => a.Account).HasForeignKey<Profiling>(ap => ap.NIK);
             modelBuilder.Entity<Profiling>()
-                .HasOne<Education>(e => e.Edu).WithMany(p => p.Profilingg);
-            modelBuilder.Entity<Education>()
-                .HasOne<University>(p => p.Univ).WithMany(a => a.Edu);
+                .HasOne(e => e.Education).WithMany(p => p.Profilingg);
+            modelBuilder.Entity<University>()
+                .HasMany(p => p.Education).WithOne(a => a.University);
             
         }
     }

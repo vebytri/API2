@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace API2.Models
-{   [Table("TB_M_Acoount")]
+{   [Table("TB_M_Acount")]
     public class Acount
     {
         [Key]

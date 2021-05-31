@@ -10,11 +10,12 @@ namespace API2.Models
     public class Education
     {
         [Key]
-        public int Id { get; set; }
+        public int Educationid { get; set; }
         public string Degree { get; set; }
         public string GPA { get; set; }
-        public int University_id { get; set; }
+        
         public virtual ICollection<Profiling> Profilingg { get; set; }
-        public virtual University Univ { get; set; }
+        public virtual University University { get; set; }
+        public int Universityid { get; set; }
     }
 }

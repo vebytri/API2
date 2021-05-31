@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API2.Migrations
 {
     [DbContext(typeof(MyContext))]
-    [Migration("20210528062515_update_relation")]
-    partial class update_relation
+    [Migration("20210531035057_fnm")]
+    partial class fnm
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,12 +31,12 @@ namespace API2.Migrations
 
                     b.HasKey("NIK");
 
-                    b.ToTable("TB_M_Acoount");
+                    b.ToTable("TB_M_Acount");
                 });
 
             modelBuilder.Entity("API2.Models.Education", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Educationid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -47,15 +47,12 @@ namespace API2.Migrations
                     b.Property<string>("GPA")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UnivId")
+                    b.Property<int>("Universityid")
                         .HasColumnType("int");
 
-                    b.Property<int>("University_id")
-                        .HasColumnType("int");
+                    b.HasKey("Educationid");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("UnivId");
+                    b.HasIndex("Universityid");
 
                     b.ToTable("TB_M_Education");
                 });
@@ -95,22 +92,19 @@ namespace API2.Migrations
                     b.Property<int>("NIK")
                         .HasColumnType("int");
 
-                    b.Property<int?>("EduId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Education_id")
+                    b.Property<int>("Educationid")
                         .HasColumnType("int");
 
                     b.HasKey("NIK");
 
-                    b.HasIndex("EduId");
+                    b.HasIndex("Educationid");
 
                     b.ToTable("TB_R_Profiling");
                 });
 
             modelBuilder.Entity("API2.Models.University", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("Universityid")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -118,7 +112,7 @@ namespace API2.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Universityid");
 
                     b.ToTable("TB_M_University");
                 });
@@ -136,20 +130,22 @@ namespace API2.Migrations
 
             modelBuilder.Entity("API2.Models.Education", b =>
                 {
-                    b.HasOne("API2.Models.University", "Univ")
-                        .WithMany("Edu")
-                        .HasForeignKey("UnivId")
+                    b.HasOne("API2.Models.University", "University")
+                        .WithMany("Education")
+                        .HasForeignKey("Universityid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Univ");
+                    b.Navigation("University");
                 });
 
             modelBuilder.Entity("API2.Models.Profiling", b =>
                 {
-                    b.HasOne("API2.Models.Education", "Edu")
+                    b.HasOne("API2.Models.Education", "Education")
                         .WithMany("Profilingg")
-                        .HasForeignKey("EduId");
+                        .HasForeignKey("Educationid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("API2.Models.Acount", "Account")
                         .WithOne("Profilingg")
@@ -159,7 +155,7 @@ namespace API2.Migrations
 
                     b.Navigation("Account");
 
-                    b.Navigation("Edu");
+                    b.Navigation("Education");
                 });
 
             modelBuilder.Entity("API2.Models.Acount", b =>
@@ -179,7 +175,7 @@ namespace API2.Migrations
 
             modelBuilder.Entity("API2.Models.University", b =>
                 {
-                    b.Navigation("Edu");
+                    b.Navigation("Education");
                 });
 #pragma warning restore 612, 618
         }

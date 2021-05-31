@@ -11,9 +11,9 @@ namespace API2.Models
     {
         [Key]
         public int NIK { get; set; }
-        public int Education_id { get; set; }
         public virtual Acount Account { get; set; }
-        public virtual Education Edu { get; set; }
+        public virtual Education Education { get; set; }
+        public int Educationid { get; set; }
 
     }
 }
