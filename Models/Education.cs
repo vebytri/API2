@@ -14,7 +14,7 @@ namespace API2.Models
         public string Degree { get; set; }
         public string GPA { get; set; }
         public int University_id { get; set; }
-        public ICollection<Profiling> Profilingg { get; set; }
+        public virtual ICollection<Profiling> Profilingg { get; set; }
         public virtual University Univ { get; set; }
     }
 }

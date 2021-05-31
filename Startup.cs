@@ -13,6 +13,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Proxies;
+using Newtonsoft.Json;
 
 namespace API2
 {
@@ -28,14 +30,16 @@ namespace API2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+            .AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
             services.AddScoped<PersonRepository>();
             services.AddScoped<AcountRepository>();
             services.AddScoped<ProfilingRepository>();
             services.AddScoped<EducationRepository>();
             services.AddScoped<UniversityRepository>();
-            services.AddDbContext<MyContext>((options => 
-            options.UseSqlServer(Configuration.GetConnectionString("Api2Context"))));
+            services.AddDbContext<MyContext>(options => 
+            options.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("Api2Context")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

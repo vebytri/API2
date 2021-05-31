@@ -12,6 +12,6 @@ namespace API2.Models
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Education> Edu { get; set; }
+        public virtual ICollection<Education> Edu { get; set; }
     }
 }

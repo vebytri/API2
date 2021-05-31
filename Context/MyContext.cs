@@ -30,6 +30,7 @@ namespace API2.Context
                 .HasOne<Education>(e => e.Edu).WithMany(p => p.Profilingg);
             modelBuilder.Entity<Education>()
                 .HasOne<University>(p => p.Univ).WithMany(a => a.Edu);
+            
         }
     }
 }

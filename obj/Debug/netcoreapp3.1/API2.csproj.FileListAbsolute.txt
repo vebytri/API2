@@ -61,3 +61,8 @@ C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\obj\Debug\netcoreapp3.1\API2
 C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\obj\Debug\netcoreapp3.1\API2.dll
 C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\obj\Debug\netcoreapp3.1\API2.pdb
 C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\obj\Debug\netcoreapp3.1\API2.genruntimeconfig.cache
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Castle.Core.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Proxies.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
