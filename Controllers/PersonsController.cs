@@ -43,7 +43,7 @@ namespace API2.Controllers
                 return NotFound("Email telah di daftarkan");
             }
         }
-        //[Authorize(Roles = "Employee,Admin")]
+        [Authorize(Roles = "Employee,Admin")]
         [HttpGet]
         [Route("getall")]
         public ActionResult GetAllProfiles( )
@@ -63,7 +63,7 @@ namespace API2.Controllers
         [HttpGet("GetProfileById/{nik}")]
         //gunakan jika menggunakan policy di stratup
         // [Authorize(Policy = "admin")]
-      //  [Authorize(Roles = "Employee,Admin")]
+        [Authorize(Roles = "Employee,Admin")]
         public ActionResult GetProfileById(int nik)
         {
             var get = repo.GetProfileById(nik);
