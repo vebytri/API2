@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace API2.Repository.Data
 {
-    public class AcountRepository : GeneralRepository<MyContext, Acount, int>
+    public class RoleRepository : GeneralRepository<MyContext, Role, int>
     {
-        public AcountRepository(MyContext myContext) : base(myContext) {
-        }
+        public RoleRepository(MyContext myContext) : base(myContext) { }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using API2.Models;
+using API2.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,8 @@ namespace API2.Context
         public DbSet<Profiling> Profilings { get; set; }
         public DbSet<Education> Educations { get; set; }
         public DbSet<University> Universities { get; set; }
+        public DbSet<AcountRole> AcountRoles { get; set; }
+        public DbSet<Role> Roles { get; set; }
         //set relations
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,7 +33,20 @@ namespace API2.Context
                 .HasOne(e => e.Education).WithMany(p => p.Profilingg);
             modelBuilder.Entity<University>()
                 .HasMany(p => p.Education).WithOne(a => a.University);
-            
+            //set primary key
+            modelBuilder.Entity<AcountRole>()
+                .HasKey(ar => new { ar.NIK, ar.RoleId });
+            //many to  many
+            modelBuilder.Entity<AcountRole>()
+                .HasOne(acount => acount.Acount)
+                .WithMany(ar => ar.AcountRole)
+                .HasForeignKey(acount => acount.NIK);
+            modelBuilder.Entity<AcountRole>()
+                .HasOne(role => role.Roles)
+                .WithMany(ar => ar.AcountRoles)
+                .HasForeignKey(role => role.RoleId);
+
+
         }
     }
 }

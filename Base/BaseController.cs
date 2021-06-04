@@ -31,7 +31,8 @@ namespace API2.Base
                 return NotFound("Data tidak ada");
             }
         }
-        [Route("{key}")]
+        [HttpGet("{key}")]  //gunakan jika menggunakan swagger
+     //   [Route("{key}")] //jng gunakan jika menggunakan swagger
         public ActionResult<Entity> Get(Key key)
         {
             var get = repo.Get(key);

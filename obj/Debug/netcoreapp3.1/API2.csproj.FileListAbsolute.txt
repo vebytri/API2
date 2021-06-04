@@ -66,3 +66,10 @@ C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Micr
 C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\BCrypt.Net-Next.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Microsoft.OpenApi.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\bin\Debug\netcoreapp3.1\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\vebyt\Downloads\Metrodata\C#\API\API2\API2\obj\Debug\netcoreapp3.1\API2.MvcApplicationPartsAssemblyInfo.cs

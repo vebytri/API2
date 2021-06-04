@@ -4,14 +4,16 @@ using API2.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace API2.Migrations
 {
     [DbContext(typeof(MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20210603020011_addRole")]
+    partial class addRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,17 +36,22 @@ namespace API2.Migrations
 
             modelBuilder.Entity("API2.Models.AcountRole", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("NIK")
                         .HasColumnType("int");
 
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("NIK", "RoleId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("TB_R_AcountRole");
+                    b.ToTable("AcountRoles");
                 });
 
             modelBuilder.Entity("API2.Models.Education", b =>
@@ -158,19 +165,11 @@ namespace API2.Migrations
 
             modelBuilder.Entity("API2.Models.AcountRole", b =>
                 {
-                    b.HasOne("API2.Models.Acount", "Acount")
-                        .WithMany("AcountRole")
-                        .HasForeignKey("NIK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("API2.Models.Role", "Roles")
                         .WithMany("AcountRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Acount");
 
                     b.Navigation("Roles");
                 });
@@ -207,8 +206,6 @@ namespace API2.Migrations
 
             modelBuilder.Entity("API2.Models.Acount", b =>
                 {
-                    b.Navigation("AcountRole");
-
                     b.Navigation("Profilingg");
                 });
 
