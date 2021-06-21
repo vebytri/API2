@@ -35,8 +35,10 @@ namespace API2.Repository.Data
 
                     FirstName = register.FirstName,
                     LastName = register.LastName,
+                    BirthDate = register.BirthDate,
                     Phone = register.Phone,
-                    Email = register.Email
+                    Email = register.Email,
+                    Salary = register.Salary
                 };
                 conn.Add(person);
                 result = conn.SaveChanges();
@@ -60,7 +62,7 @@ namespace API2.Repository.Data
                     NIK = account.NIK,
                     Educationid = education.Educationid
                 };
-
+                conn.Add(profiling);
                 AcountRole acountrole = new AcountRole
                 {
                     NIK = account.NIK,
@@ -87,13 +89,16 @@ namespace API2.Repository.Data
                        FirstName = a.FirstName,
                        LastName = a.LastName,
                        Phone = a.Phone,
+                       BirthDate = a.BirthDate,
                        Email = a.Email,
+                       Salary = a.Salary,
                        Degree = ue.Degree,
                        GPA = ue.GPA,
-                       UniversityId = ep.Universityid
+                       UniversityId = ep.Universityid,
+                       Password= pa.Password
                    }
                  ).ToList();
-            return all.FirstOrDefault(a => a.NIK == nik);
+            return all.Single(a => a.NIK == nik);
         }
         public IEnumerable<RegisterVM> GetAllProfiles()
         {
@@ -104,25 +109,27 @@ namespace API2.Repository.Data
 
             var all = 
                 (
-                  from a in conn.Persons
-                  join pa in conn.Acounts on a.NIK equals pa.NIK 
-                  join ap in conn.Profilings on pa.NIK equals ap.NIK
-                  join ue in conn.Educations on ap.Educationid equals ue.Educationid
-                  join ep in conn.Universities on ue.Universityid equals ep.Universityid
+                  from p in conn.Persons
+                  join a in conn.Acounts on p.NIK equals a.NIK
+                  join pf in conn.Profilings on a.NIK equals pf.NIK
+                  join ed in conn.Educations on pf.Educationid equals ed.Educationid
+                  join un in conn.Universities on ed.Universityid equals un.Universityid
+                  join ar in conn.AcountRoles on a.NIK equals ar.NIK
+                  join r in conn.Roles on ar.RoleId equals r.Id
                   select new RegisterVM
                   {
                    NIK = a.NIK,
-                   FirstName =a.FirstName,
-                   LastName  =a.LastName,
-                   Phone =a.Phone,
-                   BirthDate =a.BirthDate,
-                   Salary= a.Salary,
-                   Email= a.Email,
-                   Password =pa.Password,
-                   Degree=  ue.Degree,
-                   GPA =ue.GPA,
-                   UniversityId =ep.Universityid,
-                 //  RoleId=ar.RoleId
+                   FirstName =p.FirstName,
+                   LastName  =p.LastName,
+                   Phone =p.Phone,
+                   BirthDate =p.BirthDate,
+                   Salary= p.Salary,
+                   Email= p.Email,
+                   Password =a.Password,
+                   Degree=  ed.Degree,
+                   GPA =ed.GPA,
+                   UniversityId =un.Universityid,
+                  // RoleId=ar.RoleId
                    }
                 ).ToList();
             return all;
@@ -179,7 +186,7 @@ namespace API2.Repository.Data
                     new Claim("role",check2nd.Roles.Name.ToString()),
                    // new Claim(ClaimTypes.Role, check2nd.Roles.Name.ToString())
         };
-                var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["Jwt:Key"]));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
                 var signin = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
                 var token = new JwtSecurityToken(
                 configuration["Jwt:Issuer"],
@@ -212,6 +219,54 @@ namespace API2.Repository.Data
             //return tokenHandler.WriteToken(token);
         }
 
+        public int DeleteData(int nik)
+        {
+            if (conn.Persons.Find(nik) != null)
+            {
+                conn.Remove(conn.Profilings.Find(nik));
+                var res = conn.SaveChanges();
+                conn.Remove(conn.AcountRoles.Find(nik,1));
+                res += conn.SaveChanges();
+                conn.Remove(conn.Acounts.Find(nik));
+                res += conn.SaveChanges();
+                conn.Remove(conn.Persons.Find(nik));
+                res += conn.SaveChanges();
+
+                return res;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public int UpdateData(RegisterVM register)
+        {
+            
+            
+            Person person = new Person
+            {
+                NIK = register.NIK,
+                FirstName = register.FirstName,
+                LastName = register.LastName,
+                BirthDate = register.BirthDate,
+                Phone = register.Phone,
+                Email = register.Email,
+                Salary = register.Salary
+            };
+            try
+            {
+                conn.Update(person);
+                var result=conn.SaveChanges();
+                return result;
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+        }
+
+        
     }
 
 

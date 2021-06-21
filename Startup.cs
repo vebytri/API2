@@ -36,7 +36,7 @@ namespace API2
         {
             services.AddCors(c =>
             {
-                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44393"));
+                c.AddPolicy("AllowOrigin", options => options.WithOrigins("https://localhost:44393").AllowAnyMethod().AllowCredentials().AllowAnyHeader());
             });
             services.AddSwaggerGen(swagger =>
             {
@@ -99,9 +99,10 @@ namespace API2
                     ValidateAudience = true,
                     ValidAudience = Configuration["Jwt:Audience"],
                     ValidIssuer = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Jwt:key"]))
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                 };
             });
+           
 
 
             //untuk menggunakan pilicy authorization //[Authorize (Policy ="admin")]
@@ -134,11 +135,11 @@ namespace API2
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(options => options.WithOrigins("https://localhost:44342"));
 
             app.UseAuthentication();
 
             app.UseAuthorization();
+            app.UseCors(options => options.WithOrigins("https://localhost:44393"));
 
             app.UseEndpoints(endpoints =>
             {

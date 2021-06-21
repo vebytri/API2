@@ -18,7 +18,8 @@ namespace API2.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    //[EnableCors("AllowOrigin")]
+    [EnableCors("AllowOrigin")]
+   // [DisableCors()]
     public class PersonsController : BaseController<Person, PersonRepository, int>
     {
         //private readonly MyContext conn;
@@ -40,10 +41,10 @@ namespace API2.Controllers
             }
             else
             {
-                return NotFound("Email telah di daftarkan");
+                return BadRequest("Email telah di daftarkan");
             }
         }
-        [Authorize(Roles = "Employee,Admin")]
+       // [Authorize(Roles = "Employee,Admin")]
         [HttpGet]
         [Route("getall")]
         public ActionResult GetAllProfiles( )
@@ -63,7 +64,7 @@ namespace API2.Controllers
         [HttpGet("GetProfileById/{nik}")]
         //gunakan jika menggunakan policy di stratup
         // [Authorize(Policy = "admin")]
-        [Authorize(Roles = "Employee,Admin")]
+       // [Authorize(Roles = "Employee,Admin")]
         public ActionResult GetProfileById(int nik)
         {
             var get = repo.GetProfileById(nik);
@@ -80,16 +81,52 @@ namespace API2.Controllers
         [HttpPost("Login")]
         public ActionResult Login(LoginVM LoginVM)
         {
-            var get = repo.Login(LoginVM);
+            var login = repo.Login(LoginVM);
+
+            if (login == 404)
             {
-                if (get > 0)
+                return BadRequest("Email Belum Terdaftar");
+            }
+            else if (login == 401)
+            {
+                return BadRequest("Password Salah");
+            }
+            else if (login == 1)
+            {
+                return Ok(new JWTokenVM
                 {
-                    return Ok($"Berhasil Login \nToken :{repo.GenerateToken(LoginVM)}");
-                }
-                else
-                {
-                    return NotFound("email atau password salah");
-                }
+                    Token = repo.GenerateToken(LoginVM),
+                    Message = "Login Sukses"
+                });
+            }
+            else
+                return BadRequest("Gagal Login");
+        }
+        [HttpDelete("DeleteData/{nik}")]
+        public ActionResult DeleteData(int nik)
+        {
+            var del = repo.DeleteData(nik);
+            if (del > 0)
+            {
+                return Ok(del);
+            }
+            else
+            {
+                return NotFound("Maaf Data tidak ditemukan");
+            }
+        }
+        [HttpPut("UpdateData")]
+        public ActionResult UpdateData(RegisterVM register)
+        {
+            var get = repo.UpdateData(register);
+
+            if (get > 0)
+            {
+                return Ok("Berhasil Menggubah data");
+            }
+            else
+            {
+                return BadRequest("terjadi kesalahan ketika update");
             }
         }
 
